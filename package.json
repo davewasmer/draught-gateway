@@ -1,7 +1,7 @@
 {
   "name": "@draught/gateway",
   "version": "0.0.0-development",
-  "description": "",
+  "description": "Cleanly wrap Next.js API routes with middleware, unified error handling, and more.",
   "main": "./lib/src/index.js",
   "files": [
     "lib/**/*"
