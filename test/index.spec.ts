@@ -1,13 +1,29 @@
-import { myPackage } from '../src';
+import { NextApiRequest, NextApiResponse } from 'next';
+import path from 'path';
+import initializeGateway from '../src';
 
 describe('index', () => {
-  describe('myPackage', () => {
-    it('should return a string containing the message', () => {
-      const message = 'Hello';
+  describe('initializeGateway', () => {
+    // require.context not available in jest, don't feel like mocking/solving
+    it.skip('return a gateway function', async () => {
+      let res: any;
+      let gateway = initializeGateway<{ default(): string }>({
+        dir: path.join(__dirname, 'fixtures/api'),
+        executeRequest(handler) {
+          return { result: handler.module.default() };
+        },
+      });
 
-      const result = myPackage(message);
+      await gateway(
+        { url: '/api/list', method: 'get' } as unknown as NextApiRequest,
+        {
+          json(response: any) {
+            res = response;
+          },
+        } as unknown as NextApiResponse
+      );
 
-      expect(result).toMatch(message);
+      expect(res).toEqual({ result: 'list was invoked' });
     });
   });
 });

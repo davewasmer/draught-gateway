@@ -9,7 +9,7 @@ export type GatewayConfig<HandlerModule> = {
     handler: HandlerDescriptor<HandlerModule>,
     req: NextApiRequest,
     res: NextApiResponse
-  ): Promise<unknown>;
+  ): unknown | Promise<unknown>;
 };
 
 export type Handlers<HandlerModule> = {
